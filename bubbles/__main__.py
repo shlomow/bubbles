@@ -1,9 +1,11 @@
 import click
 import bubbles
 
+
 @click.group()
 def cli():
     pass
+
 
 @cli.command()
 @click.option('--host', default='0.0.0.0', help='hostname to bind')
@@ -20,5 +22,6 @@ def run(host, port, data):
 @click.argument('thought', type=str)
 def upload(host, port, user_id, thought):
     bubbles.upload_thought((host, port), user_id, thought)
+
 
 cli()

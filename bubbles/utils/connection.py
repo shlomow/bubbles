@@ -1,5 +1,6 @@
 import socket
 
+
 class Connection:
 
     def __init__(self, sock):
@@ -9,7 +10,8 @@ class Connection:
         sock_addr, sock_port = self.sock.getsockname()
         peer_addr, peer_port = self.sock.getpeername()
 
-        return f'<Connection from {sock_addr}:{sock_port} to {peer_addr}:{peer_port}>'
+        return f'<Connection from {sock_addr}:{sock_port} to ' \
+               f'{peer_addr}:{peer_port}>'
 
     def send(self, data):
         self.sock.sendall(data)

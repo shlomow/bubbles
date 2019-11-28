@@ -11,7 +11,8 @@ class Listener:
         self.server = None
 
     def __repr__(self):
-        return f'Listener(port={self.port}, host={self.host!r}, backlog={self.backlog}, reuseaddr={self.reuseaddr})'
+        return f'Listener(port={self.port}, host={self.host!r}, ' \
+               f'backlog={self.backlog}, reuseaddr={self.reuseaddr})'
 
     def start(self):
         self.server = socket.socket()
@@ -26,7 +27,7 @@ class Listener:
     def accept(self):
         client, _ = self.server.accept()
         return Connection(client)
-    
+
     def __enter__(self):
         self.start()
         return self

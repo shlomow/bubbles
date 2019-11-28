@@ -1,6 +1,6 @@
 import pathlib
 import struct
-import datetime
+import datetime as dt
 import threading
 import contextlib
 import bubbles.utils as utils
@@ -26,13 +26,14 @@ class ClientHandler(threading.Thread):
 
     def run(self):
         (user_id, timestamp, _, thought) = self.receive_packet()
-        filename = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d_%H-%M-%S.txt')
+        dt_timestamp = dt.datetime.fromtimestamp(timestamp)
+        filename = dt_timestamp.strftime('%Y-%m-%d_%H-%M-%S.txt')
         self.lock.acquire()
         try:
             user_dir_path = pathlib.Path(self.data_dir) / str(user_id)
             if not user_dir_path.exists():
                 user_dir_path.mkdir(parents=True, exist_ok=True)
-            
+
             full_path = user_dir_path / filename
             if full_path.exists():
                 payload = '\n' + thought.decode()
@@ -44,6 +45,7 @@ class ClientHandler(threading.Thread):
         finally:
             self.lock.release()
             self.connection.close()
+
 
 def run_server(address, data_dir):
     with contextlib.suppress(KeyboardInterrupt):
