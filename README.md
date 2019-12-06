@@ -12,9 +12,9 @@ This package supports a Brain Computer Interface — imaginary hardware that can
 1. Clone the repository and enter it:
 
     ```sh
-    $ git clone https://github.com/advanced-system-design/bubbles-311130678.git
+    $ git clone https://github.com/shlomow/bubbles.git
     ...
-    $ cd bubbles-311130678/
+    $ cd bubbles/
     ```
 
 2. Run the installation script and activate the virtual environment:
