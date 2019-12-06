@@ -1,3 +1,6 @@
+![build status](https://api.travis-ci.org/shlomow/bubbles.svg?branch=master)
+![coverage](https://codecov.io/gh/shlomow/bubbles/branch/master/graph/badge.svg)
+
 # Bubbles
 
 ## Introduction
