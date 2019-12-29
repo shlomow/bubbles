@@ -3,3 +3,8 @@
 htmlcov/
 .vscode/
 temp/
+
+*.pyc
+
+# protobuf generated files
+*pb2.py
