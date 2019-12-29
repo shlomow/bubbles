@@ -23,11 +23,13 @@ class BinaryReader:
             translation = struct.unpack('<3d', self.stream.read(struct.calcsize('<3d')))
             rotation = struct.unpack('<4d', self.stream.read(struct.calcsize('<4d')))
             color_image_height, color_image_width = struct.unpack('<II', self.stream.read(8))
+
             color_image = list()
             for _ in range(color_image_height * color_image_width):
                 pixel_bgr = self.stream.read(3)
-                r, g, b = pixel_bgr[2], pixel_bgr[1], pixel_bgr[0]
-                color_image.append((r, g, b))
+                r, g, b = pixel_bgr[2:], pixel_bgr[1:2], pixel_bgr[0:1]
+                color_image.append(r + g + b)
+            color_image = b''.join(color_image)
                 
             depth_image_height, depth_image_width = struct.unpack('<II', self.stream.read(8))
             depth_image_size = depth_image_height * depth_image_width
