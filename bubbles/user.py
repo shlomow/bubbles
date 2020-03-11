@@ -9,20 +9,11 @@ class User:
         self.birthdate = dt.datetime.fromtimestamp(birthdate)
         self.gender = gender
 
-        assert self.gender in ['m', 'f', 'o'], 'unknown gender'
-
     def __repr__(self):
-        if self.gender == 'm':
-            gender = 'male'
-        elif self.gender == 'f':
-            gender = 'female'
-        else:
-            gender = 'other'
-        
         birth_repr = self.birthdate.strftime('%B %d, %Y')
 
         return f'user {self.user_id}: {self.username}, born '\
-               f'{birth_repr} ({gender})'
+               f'{birth_repr} ({self.gender})'
 
     def dict(self):
         return dict(user_id=self.user_id, 

@@ -1,2 +1,1 @@
-from .binary import BinaryReader
-from .proto import ProtoReader
+from .reader import Reader

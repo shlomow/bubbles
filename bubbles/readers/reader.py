@@ -1,13 +1,9 @@
-from .readers import BinaryReader
-from .readers import ProtoReader
+from bubbles.readers.proto import ProtoReader
 import gzip
 
 
 def find_reader(format):
-    if format == 'binary':
-        return BinaryReader
-
-    elif format == 'protobuf':
+    if format == 'protobuf':
         return ProtoReader
 
     raise TypeError("unknown format")
