@@ -40,3 +40,4 @@ urllib3==1.25.7
 wcwidth==0.1.7
 Werkzeug==0.16.0
 zipp==0.6.0
+pika

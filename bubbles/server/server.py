@@ -24,7 +24,3 @@ class Server:
 def run_server(host, port, publish):
     server = Server(host, port, publish)
     server.run()
-
-
-if __name__ == '__main__':
-    run_server(('localhost', 5000))

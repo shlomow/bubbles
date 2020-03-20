@@ -7,6 +7,6 @@ setup(
     author = 'Shlomi Vaknin',
     description = 'Brain Computer Interface',
     packages = find_packages(),
-    install_requires = ['click'],
+    install_requires = ['click', 'pika'],
     tests_require = ['pytest', 'pytest-cov'],
 )
