@@ -16,7 +16,7 @@ class User:
                f'{birth_repr} ({self.gender})'
 
     def dict(self):
-        return dict(user_id=self.user_id, 
+        return dict(user_id=self.user_id,
                     username=self.username,
                     birthdate=int(self.birthdate.timestamp()),
                     gender=self.gender)

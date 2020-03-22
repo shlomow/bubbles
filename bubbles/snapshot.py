@@ -1,5 +1,3 @@
-import base64
-import json
 import datetime as dt
 
 
@@ -24,19 +22,9 @@ class Snapshot:
     def __repr__(self):
         date_repr = self.timestamp.strftime('%B %d, %Y')
         time_repr = str(self.timestamp.time())
-        return f'Snapshot from {date_repr} at {time_repr} on {self.translation}'\
-               f' / {self.rotation} with a {self.color_image.width}x'\
-               f'{self.color_image.height} color image and a '\
-               f'{self.depth_image.width}x{self.depth_image.height}'\
-               f' depth image'
-
-    def dict(self):
-        return dict(timestamp=int(self.timestamp.timestamp()),
-                    translation=self.translation,
-                    rotation=self.rotation,
-                    color_image=base64.encodebytes(self.color_image.data).decode(),
-                    depth_image=self.depth_image.data,
-                    feelings=self.feelings)
-
-    def json(self):
-        return json.dumps(self.dict())
+        return \
+            f'Snapshot from {date_repr} at {time_repr} on {self.translation}'\
+            f' / {self.rotation} with a {self.color_image.width}x'\
+            f'{self.color_image.height} color image and a '\
+            f'{self.depth_image.width}x{self.depth_image.height}'\
+            f' depth image'
