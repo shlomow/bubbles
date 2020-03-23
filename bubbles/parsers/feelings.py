@@ -1,8 +1,9 @@
-def parse_feelings(snapshot):
-    return {'hunger': snapshot.Feelings.hunger,
-            'thirst': snapshot.Feelings.thirst,
-            'exhaustion': snapshot.Feelings.exhaustion,
-            'happiness': snapshot.Feelings.happiness}
+def parse_feelings(context, user, snapshot):
+    return {'id': user.user_id,
+            'hunger': snapshot.feelings.hunger,
+            'thirst': snapshot.feelings.thirst,
+            'exhaustion': snapshot.feelings.exhaustion,
+            'happiness': snapshot.feelings.happiness}
 
 
 parse_feelings.name = 'feelings'

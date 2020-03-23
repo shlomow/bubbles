@@ -10,9 +10,10 @@ class ProtoReader:
         user_size, = struct.unpack('<I', self.stream.read(4))
         user_proto = bubbles_proto.User()
         user_proto.ParseFromString(self.stream.read(user_size))
-        gender = bubbles_proto.User.Gender.Name(user_proto.gender).lower()
-        self.user = user.User(user_proto.user_id, user_proto.username,
-                              user_proto.birthday, gender)
+        self.user = user_proto
+        # gender = bubbles_proto.User.Gender.Name(user_proto.gender).lower()
+        #  self.user = user.User(user_proto.user_id, user_proto.username,
+        #                      user_proto.birthday, gender)
 
     def __iter__(self):
         return self
@@ -22,6 +23,7 @@ class ProtoReader:
             snapshot_size, = struct.unpack('<I', self.stream.read(4))
             snapshot_proto = bubbles_proto.Snapshot()
             snapshot_proto.ParseFromString(self.stream.read(snapshot_size))
+            return snapshot_proto
 
             timestamp = snapshot_proto.datetime / 1000
             translation = (snapshot_proto.pose.translation.x,
