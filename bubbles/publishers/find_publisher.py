@@ -1,2 +1,6 @@
+from .rabbitmq import RabbitmqPublisher
+
+
 def find_publisher(url):
-    pass
+    pub = RabbitmqPublisher(url)
+    return pub.publish

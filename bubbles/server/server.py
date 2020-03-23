@@ -16,7 +16,7 @@ class Server:
 
     def snapshot(self):
         self.publish(flask.request.data)
-        return flask.jsonify({'return_value': 3, 'error': None})
+        return ""
 
     def run(self):
         self.app.run(host=self.host, port=self.port)

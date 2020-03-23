@@ -1,5 +1,5 @@
-def parse_pose(context, snapshot):
-    context.print(snapshot.pose.rotation, snapshot.pose.translation)
+def parse_pose(snapshot):
+    print(snapshot.pose.rotation, snapshot.pose.translation)
 
 
-parse_pose.field = 'pose'
+parse_pose.name = 'pose'

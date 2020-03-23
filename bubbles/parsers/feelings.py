@@ -1,5 +1,8 @@
-def parse_feelings(context, snapshot):
-    context.print(snapshot.feelings)
+def parse_feelings(snapshot):
+    return {'hunger': snapshot.Feelings.hunger,
+            'thirst': snapshot.Feelings.thirst,
+            'exhaustion': snapshot.Feelings.exhaustion,
+            'happiness': snapshot.Feelings.happiness}
 
 
-parse_feelings.field = 'feelings'
+parse_feelings.name = 'feelings'
