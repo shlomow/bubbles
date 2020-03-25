@@ -40,7 +40,7 @@ class RabbitmqPublisher:
         if self.is_subscriber:
             channel.exchange_declare(exchange=self.sub_exchange,
                                      exchange_type='topic')
-            channel.queue_declare(self.queue, durable=True)
+            channel.queue_declare(self.sub_queue, durable=True)
 
             channel.queue_bind(exchange=self.sub_exchange,
                                queue=self.sub_queue,
@@ -67,6 +67,7 @@ class RabbitmqPublisher:
         self.channel.basic_consume(
             queue=self.sub_queue,
             on_message_callback=self.on_message_callback)
+        self.channel.start_consuming()
 
     def close(self):
         self.connection.close()

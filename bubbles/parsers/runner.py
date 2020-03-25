@@ -1,3 +1,4 @@
+import json
 import bubbles.parsers
 import pathlib
 import importlib
@@ -32,6 +33,6 @@ def run_parser(topic, data):
     parsers = load_parsers()
     user, snapshot = deserialize_message(data)
     if topic in parsers:
-        return parsers[topic](None, user, snapshot)
+        return json.dumps(parsers[topic](None, user, snapshot))
     else:
         raise ValueError('invalid parser name')

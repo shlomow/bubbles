@@ -1,3 +1,4 @@
+import json
 import click
 import bubbles.parsers
 import bubbles.publishers
@@ -10,30 +11,31 @@ def cli():
 
 
 @cli.command()
-@click.argument('topic', help='topic name to parse')
-@click.argument('path', help='path to snaphost data')
+@click.argument('topic')
+@click.argument('path')
 def parse(topic, path):
     with open(path) as f:
         data = f.read()
     bubbles.parsers.run_parser(topic, data)
 
 
-def temp_cb(context, body):
+def consume_callback(context, body):
     parsers = bubbles.parsers.load_parsers()
     user, snapshot = deserialize_message(body)
-    print(user)
+    t = parsers['pose'](None, user, snapshot)
+    print(json.dumps(t))
 
 
 @cli.command()
-@click.argument('topic', help='topic name to parse')
-@click.argument('mq', help='message queue url')
+@click.argument('topic')
+@click.argument('mq')
 def run_parser(topic, mq):
     publisher = bubbles.publishers.find_publisher(mq)
     publisher_obj = publisher(mq,
                               sub_exchange='snapshots',
                               sub_routing_key='snapshot.data',
                               sub_queue=topic,
-                              callback=temp_cb)
+                              callback=consume_callback)
 
     publisher_obj.subscribe()
 
