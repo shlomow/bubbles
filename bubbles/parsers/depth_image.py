@@ -10,7 +10,7 @@ def parse_depth_image(context, user, snapshot):
     pixels = [raw_data[i:i+width] for i in range(0, len(raw_data), width)]
     plt.imshow(pixels, cmap='hot', interpolation='nearest')
     plt.savefig(path)
-    return {'id': user.user_id,
+    return {'user_id': user.user_id,
             'path': str(path)}
 
 

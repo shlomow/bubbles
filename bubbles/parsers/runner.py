@@ -2,11 +2,12 @@ import bubbles.parsers
 import pathlib
 import importlib
 import inspect
+from bubbles.protocol import deserialize_message
 
 
 def load_parsers():
     # import all submodules of the parsers
-    root = pathlib.Path(bubbles.parsers.__file__).parent()
+    root = pathlib.Path(bubbles.parsers.__file__).parent
     for path in root.iterdir():
         if path.name.startswith('_') or not path.suffix == '.py':
             continue
@@ -29,7 +30,8 @@ def load_parsers():
 
 def run_parser(topic, data):
     parsers = load_parsers()
+    user, snapshot = deserialize_message(data)
     if topic in parsers:
-        return parsers[topic](data)
+        return parsers[topic](None, user, snapshot)
     else:
         raise ValueError('invalid parser name')

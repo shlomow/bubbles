@@ -1,5 +1,4 @@
 import struct
-from bubbles import user
 from bubbles import snapshot
 import bubbles.protobuf.bubbles_pb2 as bubbles_proto
 
@@ -11,9 +10,6 @@ class ProtoReader:
         user_proto = bubbles_proto.User()
         user_proto.ParseFromString(self.stream.read(user_size))
         self.user = user_proto
-        # gender = bubbles_proto.User.Gender.Name(user_proto.gender).lower()
-        #  self.user = user.User(user_proto.user_id, user_proto.username,
-        #                      user_proto.birthday, gender)
 
     def __iter__(self):
         return self

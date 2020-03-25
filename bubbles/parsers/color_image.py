@@ -11,7 +11,7 @@ def parse_color_image(context, user, snapshot):
     pixels = [raw_data[i:i+3] for i in range(0, len(raw_data), 3)]
     image.putdata(pixels)
     image.save(path)
-    return {'id': user.user_id,
+    return {'user_id': user.user_id,
             'path': str(path)}
 
 
