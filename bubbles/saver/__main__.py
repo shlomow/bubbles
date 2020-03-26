@@ -1,7 +1,7 @@
 import click
 from bubbles.saver import Saver
 import json
-import bubbles.publishers
+# import bubbles.publishers
 
 
 @click.group()
@@ -25,8 +25,9 @@ def save(database, topic, path):
 @click.argument('database', help='database url')
 @click.argument('mq', help='message queue url')
 def run_saver(database, mq):
-    publish = bubbles.publishers.find_publisher(mq)
-    saver = Saver(database)
+    # publish = bubbles.publishers.find_publisher(mq)
+    # saver = Saver(database)
+    pass
 
 
 cli()

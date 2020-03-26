@@ -4,6 +4,7 @@ python:
 install:
   - pip install -r requirements.txt
 script:
+  - flake8
   - pytest --cov-report term --cov=bubbles
 after_success:
   - codecov
