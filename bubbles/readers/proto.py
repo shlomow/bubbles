@@ -3,6 +3,8 @@ import bubbles.protobuf.bubbles_pb2 as bubbles_proto
 
 
 class ProtoReader:
+    format = 'protobuf'
+
     def __init__(self, stream):
         self.stream = stream
         user_size, = struct.unpack('<I', self.stream.read(4))

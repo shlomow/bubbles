@@ -14,9 +14,9 @@ def cli():
 @click.argument('topic')
 @click.argument('path')
 def parse(topic, path):
-    with open(path) as f:
+    with open(path, 'rb') as f:
         data = f.read()
-    bubbles.parsers.run_parser(topic, data)
+    print(bubbles.parsers.run_parser(topic, data))
 
 
 def consume_callback(context, body):

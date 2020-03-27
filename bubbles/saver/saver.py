@@ -16,9 +16,9 @@ class Saver:
         # import all submodules of the savers
         root = pathlib.Path(bubbles.saver.__file__).parent
         for path in root.iterdir():
-            if path.name.startswith('_') or not path.suffix == '.py':
-                continue
-            importlib.import_module(f'.{path.stem}', package='bubbles.saver')
+            if path.suffix == '.py' and not path.name.startswith('_'):
+                importlib.import_module(f'.{path.stem}',
+                                        package='bubbles.saver')
 
         # map parser name to its function or class
         out = dict()

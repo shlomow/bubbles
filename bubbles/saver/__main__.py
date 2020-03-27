@@ -1,6 +1,5 @@
 import click
 from bubbles.saver import Saver
-import json
 # import bubbles.publishers
 
 
@@ -11,19 +10,19 @@ def cli():
 
 @cli.command()
 @click.option('-d', '--database', required=True, help='database url')
-@click.argument('topic', help='topic name represents the content in path')
-@click.argument('path', help='path to topic result')
+@click.argument('topic')
+@click.argument('path')
 def save(database, topic, path):
     with open(path) as f:
-        data = json.loads(f.read())
+        data = f.read()
 
     saver = Saver(database)
     saver.save(topic, data)
 
 
 @cli.command()
-@click.argument('database', help='database url')
-@click.argument('mq', help='message queue url')
+@click.argument('database')
+@click.argument('mq')
 def run_saver(database, mq):
     # publish = bubbles.publishers.find_publisher(mq)
     # saver = Saver(database)

@@ -1,10 +1,23 @@
-from bubbles.readers.proto import ProtoReader
+import bubbles.readers
 import gzip
+import pathlib
+import inspect
+import importlib
 
 
 def find_reader(format):
-    if format == 'protobuf':
-        return ProtoReader
+    # import all submodules of the readers
+    root = pathlib.Path(bubbles.readers.__file__).parent
+    for path in root.iterdir():
+        if path.suffix == '.py' and not path.name.startswith('_'):
+            importlib.import_module(f'.{path.stem}', package='bubbles.readers')
+
+    # search for format in the classes we imported
+    for _, module in inspect.getmembers(bubbles.readers, inspect.ismodule):
+        for _, member in inspect.getmembers(module, inspect.isclass):
+            if 'format' in member.__dict__:
+                if format == member.__dict__['format']:
+                    return member
 
     raise TypeError("unknown format")
 
@@ -31,10 +44,3 @@ class Reader:
         except StopIteration:
             self.fd.close()
             raise StopIteration
-
-
-def read(path, format):
-    reader = Reader(path, format)
-    print(reader.user)
-    for snapshot in reader:
-        print(snapshot)

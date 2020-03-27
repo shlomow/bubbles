@@ -11,8 +11,11 @@ class Server:
                               methods=['POST'])
 
     def snapshot(self):
-        self.publish(flask.request.data)
-        return ""
+        try:
+            self.publish(flask.request.data)
+            return ""
+        except Exception as e:
+            return flask.jsonify({'error': str(e)}), 500
 
     def run(self):
         self.app.run(host=self.host, port=self.port)
