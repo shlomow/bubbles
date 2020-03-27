@@ -1,12 +1,12 @@
 import os
 import sys
 import datetime as dt
-import bubbles.protobuf.bubbles_pb2 as bubbles_proto
 import pytest
 from sqlalchemy import create_engine
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import bubbles.protobuf.bubbles_pb2 as bubbles_proto
 
 # user parameters
 _USER_ID = 5
