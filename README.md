@@ -1,5 +1,6 @@
 ![build status](https://api.travis-ci.org/shlomow/bubbles.svg?branch=master)
 ![coverage](https://codecov.io/gh/shlomow/bubbles/branch/master/graph/badge.svg)
+[![Documentation Status](https://readthedocs.org/projects/bubbles-advanced-system-design/badge/?version=latest)](https://bubbles-advanced-system-design.readthedocs.io/en/latest/?badge=latest)
 
 # Bubbles
 
