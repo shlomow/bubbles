@@ -6,8 +6,5 @@ temp/
 
 *.pyc
 
-# protobuf generated files
-*pb2.py
-
 # sphinx
 docs/_build
