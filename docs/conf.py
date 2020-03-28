@@ -22,6 +22,7 @@ project = 'Bubbles'
 copyright = '2020, Shlomo Waknine'
 author = 'Shlomo Waknine'
 
+master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 
