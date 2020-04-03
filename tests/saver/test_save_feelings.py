@@ -7,7 +7,7 @@ def test_feelings(tmp_engine):
     url, engine = tmp_engine
     saver = Saver(url)
     data = {
-        'user_id': 1,
+        'snapshot_id': 1,
         'hunger': 5,
         'thirst': 6,
         'exhaustion': 7,
@@ -26,7 +26,7 @@ def test_feelings(tmp_engine):
 def test_feelings_cli(tmp_path, tmp_engine):
     url, engine = tmp_engine
     data = {
-        'user_id': 1,
+        'snapshot_id': 1,
         'hunger': 5,
         'thirst': 6,
         'exhaustion': 7,

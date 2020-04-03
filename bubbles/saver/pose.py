@@ -4,7 +4,7 @@ import sqlalchemy as db
 def save_pose(engine, pose):
     metadata = db.MetaData()
     table = db.Table('pose', metadata,
-                     db.Column('user_id', db.Integer),
+                     db.Column('snapshot_id', db.Integer),
                      db.Column('rotation_x', db.Float),
                      db.Column('rotation_y', db.Float),
                      db.Column('rotation_z', db.Float),
@@ -15,7 +15,7 @@ def save_pose(engine, pose):
 
     metadata.create_all(engine)
 
-    pose = {'user_id': pose['user_id'],
+    pose = {'snapshot_id': pose['snapshot_id'],
             'rotation_x': pose['rotation'][0],
             'rotation_y': pose['rotation'][1],
             'rotation_z': pose['rotation'][2],

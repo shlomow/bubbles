@@ -7,13 +7,13 @@ def test_pose(tmp_engine):
     url, engine = tmp_engine
     saver = Saver(url)
     data = {
-        'user_id': 1,
+        'snapshot_id': 1,
         'translation': [2, 3, 4],
         'rotation': [5, 6, 7, 8]
     }
 
     expected = {
-        'user_id': 1,
+        'snapshot_id': 1,
         'translation_x': 2,
         'translation_y': 3,
         'translation_z': 4,
@@ -35,13 +35,13 @@ def test_pose(tmp_engine):
 def test_pose_cli(tmp_path, tmp_engine):
     url, engine = tmp_engine
     data = {
-        'user_id': 1,
+        'snapshot_id': 1,
         'translation': [2, 3, 4],
         'rotation': [5, 6, 7, 8]
     }
 
     expected = {
-        'user_id': 1,
+        'snapshot_id': 1,
         'translation_x': 2,
         'translation_y': 3,
         'translation_z': 4,

@@ -1,5 +1,5 @@
 def parse_pose(context, user, snapshot):
-    return {'user_id': user.user_id,
+    return {'snapshot_id': snapshot.datetime,
             'rotation': [snapshot.pose.rotation.x,
                          snapshot.pose.rotation.y,
                          snapshot.pose.rotation.z,

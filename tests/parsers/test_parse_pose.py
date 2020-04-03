@@ -8,7 +8,7 @@ def test_pose(user, snapshot):
     data = create_stream(user, [snapshot]).read()
     result = run_parser('pose', data)
     expected = {
-        'user_id': user.user_id,
+        'snapshot_id': snapshot.datetime,
         'translation': [snapshot.pose.translation.x,
                         snapshot.pose.translation.y,
                         snapshot.pose.translation.z],
@@ -33,7 +33,7 @@ def test_pose_cli(tmp_path, user, snapshot):
     stdout, _ = process.communicate()
 
     expected = {
-        'user_id': user.user_id,
+        'snapshot_id': snapshot.datetime,
         'translation': [snapshot.pose.translation.x,
                         snapshot.pose.translation.y,
                         snapshot.pose.translation.z],

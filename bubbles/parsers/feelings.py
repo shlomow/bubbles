@@ -1,5 +1,5 @@
 def parse_feelings(context, user, snapshot):
-    return {'user_id': user.user_id,
+    return {'snapshot_id': snapshot.datetime,
             'hunger': snapshot.feelings.hunger,
             'thirst': snapshot.feelings.thirst,
             'exhaustion': snapshot.feelings.exhaustion,

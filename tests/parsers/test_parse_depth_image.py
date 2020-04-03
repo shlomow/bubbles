@@ -12,7 +12,7 @@ def test_depth_image(user, snapshot):
     timestamp = dt.datetime.fromtimestamp(snapshot.datetime / 1000)
     out_path = Context.work_path + f'/depth_image-{str(timestamp)}.jpg'
     expected = {
-        'user_id': user.user_id,
+        'snapshot_id': snapshot.datetime,
         'path': out_path
     }
     assert json.loads(result) == expected
@@ -33,7 +33,7 @@ def test_depth_image_cli(tmp_path, user, snapshot):
     timestamp = dt.datetime.fromtimestamp(snapshot.datetime / 1000)
     out_path = Context.work_path + f'/depth_image-{str(timestamp)}.jpg'
     expected = {
-        'user_id': user.user_id,
+        'snapshot_id': snapshot.datetime,
         'path': out_path
     }
 
