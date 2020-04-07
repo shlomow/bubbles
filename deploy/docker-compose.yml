@@ -1,0 +1,111 @@
+version: '2.0'
+services:
+    server:
+        image: vaknin/bubbles
+        ports:
+            - "${SERVER_PORT}:${SERVER_PORT}"
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        depends_on:
+            - rabbitmq
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            python -m bubbles.server run-server -h server -p ${SERVER_PORT} rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+
+    rabbitmq:
+        image: rabbitmq
+        ports:
+            - "${RABBITMQ_PORT}:5672"
+
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}      
+        ports:
+            - "${POSTGRES_PORT}:5432"
+
+    pose:
+        image: vaknin/bubbles
+        depends_on:
+            - rabbitmq
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            python -m bubbles.parsers run-parser pose rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+    
+    feelings:
+        image: vaknin/bubbles
+        depends_on:
+            - rabbitmq
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            python -m bubbles.parsers run-parser feelings rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+    
+    user:
+        image: vaknin/bubbles
+        depends_on:
+            - rabbitmq
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            python -m bubbles.parsers run-parser user rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+    
+    color_image:
+        image: vaknin/bubbles
+        depends_on:
+            - rabbitmq
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            python -m bubbles.parsers run-parser color_image rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+
+    depth_image:
+        image: vaknin/bubbles
+        depends_on:
+            - rabbitmq
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            python -m bubbles.parsers run-parser depth_image rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+
+    snapshot_meta:
+        image: vaknin/bubbles
+        depends_on:
+            - rabbitmq
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            python -m bubbles.parsers run-parser snapshot_meta rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+            
+    saver:
+        image: vaknin/bubbles
+        depends_on:
+            - rabbitmq
+            - postgres
+        command:
+            /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
+            /wait-for-it.sh postgres:${POSTGRES_PORT} --
+            python -m bubbles.saver run-saver postgresql://postgres:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT} rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+    
+    api_server:
+        image: vaknin/bubbles
+        ports:
+            - "${API_SERVER_PORT}:${API_SERVER_PORT}"
+        volumes:
+            - bubblesvolume01:/bubbles/data
+        depends_on:
+            - postgres
+        command:
+            /wait-for-it.sh postgres:${POSTGRES_PORT} --
+            python -m bubbles.api run-server -h api_server -p ${API_SERVER_PORT} -d postgresql://postgres:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}
+
+
+volumes:
+    bubblesvolume01:

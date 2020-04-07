@@ -6,6 +6,12 @@ import importlib
 
 
 def find_reader(format):
+    '''Find availabe reader according to the `format`.
+
+    :param format: format of the file we want to read.
+    :return: object which is iterable and can parse the given `format`.
+    :raises: TypeError, if `format` is not supported.
+    '''
     # import all submodules of the readers
     root = pathlib.Path(bubbles.readers.__file__).parent
     for path in root.iterdir():
@@ -23,7 +29,14 @@ def find_reader(format):
 
 
 class Reader:
+    '''Class that represents a generic snapshots reader mechansim.
+        Every reader should be iterable and return a snapshot every iteration.
+    '''
     def __init__(self, path, format):
+        '''Contructor.
+        :param path: path to the file to parse.
+        :param format: format of `path`.
+        '''
         self.path = path
         self.format = format
         if path.endswith('.gz'):

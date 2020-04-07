@@ -2,9 +2,14 @@ import sqlalchemy as db
 
 
 def save_pose(engine, pose):
+    '''Save pose to db.
+
+    :param engine: sqlalchemy engine object.
+    :param pose: json which was returned by pose parser.
+    '''
     metadata = db.MetaData()
     table = db.Table('pose', metadata,
-                     db.Column('snapshot_id', db.Integer),
+                     db.Column('snapshot_id', db.BigInteger),
                      db.Column('rotation_x', db.Float),
                      db.Column('rotation_y', db.Float),
                      db.Column('rotation_z', db.Float),

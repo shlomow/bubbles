@@ -44,6 +44,14 @@ bubbles.parsers.runner module
    :undoc-members:
    :show-inheritance:
 
+bubbles.parsers.snapshot\_meta module
+-------------------------------------
+
+.. automodule:: bubbles.parsers.snapshot_meta
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 bubbles.parsers.user module
 ---------------------------
 

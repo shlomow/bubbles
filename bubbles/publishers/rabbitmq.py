@@ -3,9 +3,21 @@ from furl import furl
 
 
 class RabbitmqPublisher:
+    '''Rabbitmq message queue handler.
+    '''
     scheme = 'rabbitmq'
 
     def __init__(self, url, *args, **kwargs):
+        '''Constructor
+
+        :param url: url of rabbitmq server. port is `5672` if not given.
+        :param kwargs: additional parameters needed to config the session.
+            `pub_exchange`, `pub_routing_key` for publishing,
+            `sub_exchange`, `sub_routing_key`, `sub_queue` for subscribing.
+            `callback` is a function that this handle will call each message
+            given. `callback_args`, `callback_kwargs` will be passed to
+            `callback` and are optional.
+        '''
         self.url = furl(url)
         if self.url.port is None:
             self.url.port = 5672  # default port of rabbitmq
@@ -22,11 +34,19 @@ class RabbitmqPublisher:
             self.sub_routing_key = kwargs['sub_routing_key']
             self.sub_queue = kwargs['sub_queue']
             self.user_callback = kwargs['callback']
+            self.user_callback_args = []
+            if 'callback_args' in kwargs:
+                self.user_callback_args = kwargs['callback_args']
+            self.user_callback_kwargs = dict()
+            if 'callback_kwargs' in kwargs:
+                self.user_callback_kwargs = kwargs['callback_kwargs']
             self.is_subscriber = True
 
-        self.connection, self.channel = self.create_connection()
-
     def create_connection(self):
+        '''Creates connection with server.
+
+        :return: connection and channel created from `__init__` parameters.
+        '''
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=self.url.host, port=self.url.port)
             )
@@ -51,6 +71,13 @@ class RabbitmqPublisher:
         return connection, channel
 
     def publish(self, msg):
+        '''Publish `msg` to rabbitmq server.
+
+        :param msg: message to publish.
+        '''
+        if not self.is_subscriber:
+            self.connection, self.channel = self.create_connection()
+
         self.channel.basic_publish(
             exchange=self.pub_exchange,
             routing_key=self.pub_routing_key,
@@ -59,15 +86,32 @@ class RabbitmqPublisher:
                 delivery_mode=2,  # make message persistent
             ))
 
+        if not self.is_subscriber:
+            self.connection.close()
+
     def on_message_callback(self, ch, method, properties, body):
-        self.user_callback(self, body)
+        '''Callback that is called after a message given by subscribing.
+            This function will call the callback given by `__init__`
+            and send ack to the server.
+        '''
+        self.user_callback(self, ch, method, properties, body,
+                           *self.user_callback_args,
+                           **self.user_callback_kwargs)
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def subscribe(self):
+        '''Subscribe according to the parameters given to `__init__`.
+        Runs forever.
+        '''
+        if self.is_subscriber:
+            self.connection, self.channel = self.create_connection()
+
         self.channel.basic_consume(
             queue=self.sub_queue,
             on_message_callback=self.on_message_callback)
         self.channel.start_consuming()
 
     def close(self):
+        '''Close connection with the server.
+        '''
         self.connection.close()

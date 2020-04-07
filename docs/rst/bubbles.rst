@@ -9,6 +9,7 @@ Subpackages
    bubbles.api
    bubbles.client
    bubbles.parsers
+   bubbles.protobuf
    bubbles.protocol
    bubbles.publishers
    bubbles.readers

@@ -3,6 +3,17 @@ import datetime as dt
 
 
 def parse_color_image(context, user, snapshot):
+    '''Save color image as jpg to a file from a given snapshot.
+
+    :param context: context given from the application,
+        used to get a path to valid directory to save the image in.
+    :param user: user object parsed from the protocol
+        between client and server.
+    :param snapshot: snapshot object parsed from the protocol
+        between client and server.
+    :return: dictionary with `snapshot_id` and `path` of the saved image.
+    :rtype: dict
+    '''
     timestamp = dt.datetime.fromtimestamp(snapshot.datetime / 1000)
     path = context.path(f'color_image-{str(timestamp)}.jpg')
     size = snapshot.color_image.width, snapshot.color_image.height

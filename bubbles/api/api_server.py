@@ -70,6 +70,123 @@ def get_snapshot(user_id, snapshot_id):
     return "", 404
 
 
+@api_server.route('/users/<user_id>/snapshots/<snapshot_id>/pose')
+def get_pose(user_id, snapshot_id):
+    query = f'SELECT * FROM pose WHERE snapshot_id={snapshot_id}'
+
+    result = None
+    with api_db_engine.connect() as conn:
+        for row in conn.execute(query):
+            result = dict(row)
+            break
+
+    if result is None:
+        return "", 404
+
+    return json.dumps({
+        'rotation': [
+            result['rotation_x'],
+            result['rotation_y'],
+            result['rotation_z'],
+            result['rotation_w']
+        ],
+        'translation': [
+            result['translation_x'],
+            result['translation_y'],
+            result['translation_z']
+        ]
+    })
+
+
+@api_server.route('/users/<user_id>/snapshots/<snapshot_id>/feelings')
+def get_feelings(user_id, snapshot_id):
+    query = f'SELECT * FROM feelings WHERE snapshot_id={snapshot_id}'
+
+    result = None
+    with api_db_engine.connect() as conn:
+        for row in conn.execute(query):
+            result = dict(row)
+            break
+
+    if result is None:
+        return "", 404
+
+    return json.dumps({
+        'hunger': result['hunger'],
+        'thirst': result['thirst'],
+        'exhaustion': result['exhaustion'],
+        'happiness': result['happiness']
+    })
+
+
+@api_server.route('/users/<user_id>/snapshots/<snapshot_id>/color_image')
+def get_color_image_meta(user_id, snapshot_id):
+    query = f'SELECT * FROM color_image WHERE snapshot_id={snapshot_id}'
+
+    result = None
+    with api_db_engine.connect() as conn:
+        for row in conn.execute(query):
+            result = dict(row)
+            break
+
+    if result is None:
+        return "", 404
+
+    return json.dumps({
+        'path': result['path']
+    })
+
+
+@api_server.route('/users/<user_id>/snapshots/<snapshot_id>/depth_image')
+def get_depth_image_meta(user_id, snapshot_id):
+    query = f'SELECT * FROM depth_image WHERE snapshot_id={snapshot_id}'
+
+    result = None
+    with api_db_engine.connect() as conn:
+        for row in conn.execute(query):
+            result = dict(row)
+            break
+
+    if result is None:
+        return "", 404
+
+    return json.dumps({
+        'path': result['path']
+    })
+
+
+@api_server.route('/users/<user_id>/snapshots/<snapshot_id>/color_image/data')
+def get_color_image_data(user_id, snapshot_id):
+    query = f'SELECT * FROM color_image WHERE snapshot_id={snapshot_id}'
+
+    result = None
+    with api_db_engine.connect() as conn:
+        for row in conn.execute(query):
+            result = dict(row)
+            break
+
+    if result is None:
+        return "", 404
+
+    return flask.send_file(result['path'])
+
+
+@api_server.route('/users/<user_id>/snapshots/<snapshot_id>/depth_image/data')
+def get_depth_image_data(user_id, snapshot_id):
+    query = f'SELECT * FROM depth_image WHERE snapshot_id={snapshot_id}'
+
+    result = None
+    with api_db_engine.connect() as conn:
+        for row in conn.execute(query):
+            result = dict(row)
+            break
+
+    if result is None:
+        return "", 404
+
+    return flask.send_file(result['path'])
+
+
 def run_api_server(host, port, database_url):
     global api_db_engine
     api_db_engine = create_engine(database_url)

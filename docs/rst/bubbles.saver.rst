@@ -44,6 +44,14 @@ bubbles.saver.saver module
    :undoc-members:
    :show-inheritance:
 
+bubbles.saver.snapshot\_meta module
+-----------------------------------
+
+.. automodule:: bubbles.saver.snapshot_meta
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 bubbles.saver.user module
 -------------------------
 

@@ -2,9 +2,14 @@ import sqlalchemy as db
 
 
 def save_feelings(engine, feelings):
+    '''Save feelings to db.
+
+    :param engine: sqlalchemy engine object.
+    :param feelings: json which was returned by feelings parser.
+    '''
     metadata = db.MetaData()
     table = db.Table('feelings', metadata,
-                     db.Column('snapshot_id', db.Integer),
+                     db.Column('snapshot_id', db.BigInteger),
                      db.Column('hunger', db.Float),
                      db.Column('thirst', db.Float),
                      db.Column('exhaustion', db.Float),

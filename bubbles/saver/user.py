@@ -2,6 +2,11 @@ import sqlalchemy as db
 
 
 def save_user(engine, user):
+    '''Save user to db.
+
+    :param engine: sqlalchemy engine object.
+    :param user: json which was returned by user parser.
+    '''
     metadata = db.MetaData()
     table = db.Table('users', metadata,
                      db.Column('user_id', db.Integer),

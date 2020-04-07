@@ -2,6 +2,8 @@ import flask
 
 
 class Server:
+    '''Server
+    '''
     def __init__(self, host, port, publish):
         self.host = host
         self.port = port

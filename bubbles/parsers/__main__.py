@@ -1,8 +1,6 @@
-import json
 import click
 import bubbles.parsers
 import bubbles.publishers
-from bubbles.protocol import deserialize_message
 
 
 @click.group()
@@ -16,14 +14,12 @@ def cli():
 def parse(topic, path):
     with open(path, 'rb') as f:
         data = f.read()
-    print(bubbles.parsers.run_parser(topic, data))
+    click.echo(bubbles.parsers.run_parser(topic, data))
 
 
-def consume_callback(context, body):
-    parsers = bubbles.parsers.load_parsers()
-    user, snapshot = deserialize_message(body)
-    t = parsers['pose'](None, user, snapshot)
-    print(json.dumps(t))
+def consume_callback(context, ch, method, properties, body):
+    data = bubbles.parsers.run_parser(context.sub_queue, body)
+    context.publish(data)
 
 
 @cli.command()
@@ -35,6 +31,8 @@ def run_parser(topic, mq):
                               sub_exchange='snapshots',
                               sub_routing_key='snapshot.data',
                               sub_queue=topic,
+                              pub_exchange='parsers',
+                              pub_routing_key=f'{topic}.result',
                               callback=consume_callback)
 
     publisher_obj.subscribe()
