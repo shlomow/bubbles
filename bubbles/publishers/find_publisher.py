@@ -8,6 +8,4 @@ def find_publisher(url):
         should return.
     :return: object with method like publish and subscribe
     '''
-    # pub = RabbitmqPublisher(url)
-    # return pub.publish
     return RabbitmqPublisher

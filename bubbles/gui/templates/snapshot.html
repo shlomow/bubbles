@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>Color Image</h2>
+
+<img src="{{snapshot['color_image']}}" />
+
+<h2>Depth Image</h2>
+
+<img src="{{snapshot['depth_image']}}" />
+
+<h2>Pose</h2>
+
+<p>{{snapshot['pose']}}</p>
+
+<h2>Feelings</h2>
+
+<p>{{snapshot['feelings']}}</p>
+
+</body>
+</html>

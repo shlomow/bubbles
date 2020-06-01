@@ -1,6 +1,8 @@
+import datetime as dt
 from sqlalchemy import create_engine
 import flask
 import json
+import bubbles.protobuf.bubbles_pb2 as pb
 
 
 api_db_engine = None
@@ -24,7 +26,10 @@ def get_user(user_id):
     out_list = []
     with api_db_engine.connect() as conn:
         for row in conn.execute(query):
-            out_list.append(dict(row))
+            elem = dict(row)
+            elem['birthday'] = str(dt.datetime.fromtimestamp(elem['birthday']))
+            elem['gender'] = pb._USER_GENDER.values[elem['gender']].name
+            out_list.append(elem)
 
     if out_list:
         return json.dumps(out_list[0])  # should be only one result
@@ -95,7 +100,7 @@ def get_pose(user_id, snapshot_id):
             result['translation_y'],
             result['translation_z']
         ]
-    })
+    }, indent=4)
 
 
 @api_server.route('/users/<user_id>/snapshots/<snapshot_id>/feelings')
@@ -116,7 +121,7 @@ def get_feelings(user_id, snapshot_id):
         'thirst': result['thirst'],
         'exhaustion': result['exhaustion'],
         'happiness': result['happiness']
-    })
+    }, indent=4)
 
 
 @api_server.route('/users/<user_id>/snapshots/<snapshot_id>/color_image')

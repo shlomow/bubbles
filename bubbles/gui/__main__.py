@@ -8,10 +8,10 @@ def cli():
 
 
 @cli.command()
-@click.option('--host', '-h', default='localhost', help='hostname to connect')
+@click.option('--host', '-h', default='localhost')
 @click.option('--port', '-p', default=8080)
-@click.option('--api-host', default='localhost', help='hostname to connect')
-@click.option('--api-port', default=5000)
+@click.option('--api-host', '-H', default='localhost')
+@click.option('--api-port', '-P', default=5000)
 def run_server(host, port, api_host, api_port):
     bubbles.gui.run_server(host, port, api_host, api_port)
 

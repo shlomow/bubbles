@@ -5,7 +5,7 @@ services:
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         depends_on:
             - rabbitmq
         command:
@@ -29,7 +29,7 @@ services:
         depends_on:
             - rabbitmq
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         command:
             /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
             python -m bubbles.parsers run-parser pose rabbitmq://rabbitmq:${RABBITMQ_PORT}/
@@ -39,7 +39,7 @@ services:
         depends_on:
             - rabbitmq
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         command:
             /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
             python -m bubbles.parsers run-parser feelings rabbitmq://rabbitmq:${RABBITMQ_PORT}/
@@ -49,7 +49,7 @@ services:
         depends_on:
             - rabbitmq
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         command:
             /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
             python -m bubbles.parsers run-parser user rabbitmq://rabbitmq:${RABBITMQ_PORT}/
@@ -59,7 +59,7 @@ services:
         depends_on:
             - rabbitmq
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         command:
             /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
             python -m bubbles.parsers run-parser color_image rabbitmq://rabbitmq:${RABBITMQ_PORT}/
@@ -69,7 +69,7 @@ services:
         depends_on:
             - rabbitmq
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         command:
             /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
             python -u -m bubbles.parsers run-parser depth_image rabbitmq://rabbitmq:${RABBITMQ_PORT}/
@@ -79,7 +79,7 @@ services:
         depends_on:
             - rabbitmq
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         command:
             /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
             python -m bubbles.parsers run-parser snapshot_meta rabbitmq://rabbitmq:${RABBITMQ_PORT}/
@@ -99,12 +99,21 @@ services:
         ports:
             - "${API_SERVER_PORT}:${API_SERVER_PORT}"
         volumes:
-            - bubblesvolume01:/bubbles/data
+            - bubblesvolume01:/tmp/bubbles
         depends_on:
             - postgres
         command:
             /wait-for-it.sh postgres:${POSTGRES_PORT} --
             python -m bubbles.api run-server -h api_server -p ${API_SERVER_PORT} -d postgresql://postgres:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}
+
+    gui_server:
+        image: vaknin/bubbles
+        ports:
+            - "${GUI_SERVER_PORT}:${GUI_SERVER_PORT}"
+        depends_on:
+            - api_server
+        command:
+            python -m bubbles.gui run-server -h gui_server -p ${GUI_SERVER_PORT} -H api_server -P ${API_SERVER_PORT}
 
 
 volumes:
