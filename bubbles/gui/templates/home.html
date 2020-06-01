@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>Users</h2>
+
+<table>
+  <tr>
+    <th>id</th>
+    <th>username</th>
+    <th>gender</th>
+    <th>birthday</th>
+  </tr>
+  {% for user in users %}
+    <tr>
+        <th><a href="/users/{{user['user_id']}}/snapshots">{{ user['user_id'] }}</a></th>
+        <th>{{ user['username'] }}</th>
+        <th>{{ user['gender'] }}</th>
+        <th>{{ user['birthday'] }}</th>
+    </tr>
+
+  {% endfor %}
+</table>
+
+</body>
+</html>

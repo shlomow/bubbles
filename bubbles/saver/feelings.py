@@ -9,7 +9,7 @@ def save_feelings(engine, feelings):
     '''
     metadata = db.MetaData()
     table = db.Table('feelings', metadata,
-                     db.Column('snapshot_id', db.BigInteger),
+                     db.Column('snapshot_id', db.BigInteger, primary_key=True),
                      db.Column('hunger', db.Float),
                      db.Column('thirst', db.Float),
                      db.Column('exhaustion', db.Float),

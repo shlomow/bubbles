@@ -9,7 +9,7 @@ def save_pose(engine, pose):
     '''
     metadata = db.MetaData()
     table = db.Table('pose', metadata,
-                     db.Column('snapshot_id', db.BigInteger),
+                     db.Column('snapshot_id', db.BigInteger, primary_key=True),
                      db.Column('rotation_x', db.Float),
                      db.Column('rotation_y', db.Float),
                      db.Column('rotation_z', db.Float),

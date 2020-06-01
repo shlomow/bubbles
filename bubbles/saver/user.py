@@ -9,7 +9,7 @@ def save_user(engine, user):
     '''
     metadata = db.MetaData()
     table = db.Table('users', metadata,
-                     db.Column('user_id', db.Integer),
+                     db.Column('user_id', db.Integer, primary_key=True),
                      db.Column('username', db.String),
                      db.Column('gender', db.Integer),
                      db.Column('birthday', db.Integer))

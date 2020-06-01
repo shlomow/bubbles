@@ -9,7 +9,7 @@ def save_color_image(engine, color_image):
     '''
     metadata = db.MetaData()
     table = db.Table('color_image', metadata,
-                     db.Column('snapshot_id', db.BigInteger),
+                     db.Column('snapshot_id', db.BigInteger, primary_key=True),
                      db.Column('path', db.String, nullable=False))
 
     metadata.create_all(engine)

@@ -3,9 +3,9 @@
 htmlcov/
 .vscode/
 temp/
+.git/
 
 *.pyc
 .pytest_cache
 
-# sphinx
-docs/_build
+docs/

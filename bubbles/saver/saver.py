@@ -1,4 +1,6 @@
 from sqlalchemy import create_engine
+import sqlalchemy
+import contextlib
 import pathlib
 import bubbles.saver
 import importlib
@@ -49,6 +51,7 @@ class Saver:
         :raises: ValueError if `topic` has no saver
         '''
         if topic in self.savers:
-            self.savers[topic](self.engine, json.loads(data))
+            with contextlib.suppress(sqlalchemy.exc.IntegrityError):
+                self.savers[topic](self.engine, json.loads(data))
         else:
             raise ValueError('invalid saver name')

@@ -72,7 +72,7 @@ services:
             - bubblesvolume01:/bubbles/data
         command:
             /wait-for-it.sh rabbitmq:${RABBITMQ_PORT} --
-            python -m bubbles.parsers run-parser depth_image rabbitmq://rabbitmq:${RABBITMQ_PORT}/
+            python -u -m bubbles.parsers run-parser depth_image rabbitmq://rabbitmq:${RABBITMQ_PORT}/
 
     snapshot_meta:
         image: vaknin/bubbles
