@@ -174,3 +174,7 @@ can run the following command to set it up:
 ```sh
 $ ./scripts/run-pipeline.sh
 ```
+
+## API Reference
+
+You can watch the api reference [here](https://bubbles-advanced-system-design.readthedocs.io/en/latest/).
