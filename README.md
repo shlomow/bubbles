@@ -165,3 +165,12 @@ Or, using the python interpreter:
 ...     api_port = 5000,
 ... )
 ```
+
+## Deployment
+
+In order to deploy the system we picked docker compose and you 
+can run the following command to set it up:
+
+```sh
+$ ./scripts/run-pipeline.sh
+```
